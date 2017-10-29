@@ -784,14 +784,69 @@ def Load():
             if len(o) > 1 and o[0] != "#": 
                 
                 try:
-            
-                    a,b,c,t,m = o.split("|")
+                    
+                    tmpsplit = o.split("|")
+                    
+                    if len(tmpsplit) == 5:
+                        a = tmpsplit[0]
+                        b = tmpsplit[1] 
+                        c = tmpsplit[2]
+                        t = tmpsplit[3]
+                        m = tmpsplit[4].split('\n')[0]
+                        
+                    elif len(tmpsplit) == 6:
+                        a = tmpsplit[0]
+                        b = tmpsplit[1] 
+                        c = tmpsplit[2]
+                        t = tmpsplit[3]
+                        m = tmpsplit[4]
+                        m2 = tmpsplit[5].split('\n')[0]
+                        
+                    elif len(tmpsplit) == 7:
+                        a = tmpsplit[0]
+                        b = tmpsplit[1] 
+                        c = tmpsplit[2]
+                        t = tmpsplit[3]
+                        m = tmpsplit[4]
+                        m2 = tmpsplit[5]
+                        m3 = tmpsplit[6].split('\n')[0]
+                        
+                    elif len(tmpsplit) == 8:
+                        a = tmpsplit[0]
+                        b = tmpsplit[1] 
+                        c = tmpsplit[2]
+                        t = tmpsplit[3]
+                        m = tmpsplit[4]
+                        m2 = tmpsplit[5]
+                        m3 = tmpsplit[6]
+                        m4 = tmpsplit[7].split('\n')[0]
+                        
+                    elif len(tmpsplit) == 9:
+                        a = tmpsplit[0]
+                        b = tmpsplit[1] 
+                        c = tmpsplit[2]
+                        t = tmpsplit[3]
+                        m = tmpsplit[4]
+                        m2 = tmpsplit[5]
+                        m3 = tmpsplit[6]
+                        m4 = tmpsplit[7]
+                        m5 = tmpsplit[8].split('\n')[0]
+                    
+                    
+                    if m2 != '':
+                        m = m + '|' + m2 
+                    elif m3 != '':
+                        m = m + '|' + m3
+                    elif m4 != '':
+                        m = m + + '|' + m4
+                    elif m5 != '':
+                        m = m + '|' + m5
+                    
                     
                     if int(rigid_var.get()) == 1:
                         aa = 0
                         
                     else:
-                        
                         aa=int(a)-1
                     
                     
@@ -841,31 +896,96 @@ def LoadAs():
         
         if len(o) > 0 and o[0] != "#": 
             
-            try:
-                a,b,c,t,m = o.split("|")
-                if int(rigid_var.get()) == 1:
-                    aa = 0
-                else:
-                    aa=int(a)-1
                 try:
-                    Task[aa].append(b)
+                    
+                    tmpsplit = o.split("|")
+                    
+                    if len(tmpsplit) == 5:
+                        a = tmpsplit[0]
+                        b = tmpsplit[1] 
+                        c = tmpsplit[2]
+                        t = tmpsplit[3]
+                        m = tmpsplit[4].split('\n')[0]
+                        
+                    elif len(tmpsplit) == 6:
+                        a = tmpsplit[0]
+                        b = tmpsplit[1] 
+                        c = tmpsplit[2]
+                        t = tmpsplit[3]
+                        m = tmpsplit[4]
+                        m2 = tmpsplit[5].split('\n')[0]
+                        
+                    elif len(tmpsplit) == 7:
+                        a = tmpsplit[0]
+                        b = tmpsplit[1] 
+                        c = tmpsplit[2]
+                        t = tmpsplit[3]
+                        m = tmpsplit[4]
+                        m2 = tmpsplit[5]
+                        m3 = tmpsplit[6].split('\n')[0]
+                        
+                    elif len(tmpsplit) == 8:
+                        a = tmpsplit[0]
+                        b = tmpsplit[1] 
+                        c = tmpsplit[2]
+                        t = tmpsplit[3]
+                        m = tmpsplit[4]
+                        m2 = tmpsplit[5]
+                        m3 = tmpsplit[6]
+                        m4 = tmpsplit[7].split('\n')[0]
+                        
+                    elif len(tmpsplit) == 9:
+                        a = tmpsplit[0]
+                        b = tmpsplit[1] 
+                        c = tmpsplit[2]
+                        t = tmpsplit[3]
+                        m = tmpsplit[4]
+                        m2 = tmpsplit[5]
+                        m3 = tmpsplit[6]
+                        m4 = tmpsplit[7]
+                        m5 = tmpsplit[8].split('\n')[0]
+                    
+                    
+                    if m2 != '':
+                        m = m + '|' + m2 
+                    elif m3 != '':
+                        m = m + '|' + m3
+                    elif m4 != '':
+                        m = m + + '|' + m4
+                    elif m5 != '':
+                        m = m + '|' + m5
+                    
+                    
+                    if int(rigid_var.get()) == 1:
+                        aa = 0
+                        
+                    else:
+                        aa=int(a)-1
+                    
+                    
+                    try:
+                        Task[aa].append(b)
+                    except:
+                        
+                        T.append([])
+                        Task.append([])
+                        time.append([])
+                        message.append([])
+                        Task[aa].append(b)
+                    d = c.split("(")
+                    e = d[1].split(")")
+                    f = e[0].split(",")
+                    g = (int(f[0]),int(f[1]))
+                    T[aa].append(g)
+                    time[aa].append(t)
+                    message[aa].append(str(m))
+                    
+                    tmp = float(tmp) + float(t)
                 except:
-                    T.append([])
-                    Task.append([])
-                    time.append([])
-                    message.append([])
-                d = c.split("(")
-                e = d[1].split(")")
-                f = e[0].split(",")
-                g = (int(f[0]),int(f[1]))
-                T[aa].append(g)
-                time[aa].append(t)
-                message[aa].append(str(m))
+                    print("Invalid file format.")
                 
-                tmp = float(tmp) + float(t)
-                
-            except:
-                pass
+        else:
+            pass
         
     tmp = nice_time(str(tmp))    
      
