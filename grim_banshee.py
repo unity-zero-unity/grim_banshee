@@ -18,6 +18,10 @@
 # sudo dnf install xclip
 # sudo pip install pyperclip
 
+# To start Grim_Banshee:
+# change directory (cd) to Grim_Banshee file,
+# then type "python Grim_Banshee.py" into terminal
+
 
 
 
@@ -116,7 +120,7 @@ def Help():
     print("Grim Banshee automates a sequence of mouse and/or keyboard commands. It stores the sequences in 10 possible memory locations that you can toggle during training.  After or during training, if you click Do, Do All, or Repeat, the tasks trained so far will be automatically performed for you.  Your progress is automatically saved after every training.")
     print(" ")
     print("Advanced:")
-    print("When the Do or Repeat buttons are clicked, only the tasks in memory #X are done.  For the Do case, those tasks will be done 1 time.  For Repeat case, those tasks weill be repeated the tasks any number of times as set in the repeat box.  The Do All button has more options.  The default case is when the random and rigid checkboxes are unchecked.  In the default case, tasks will be preformed starting in memory #1 until complete, and then tasks in memory #2 will be done, and so on.  Also, a text comparison conditionality can be configured to determine whether to proceed to the next memory.  If 'always' is selected, there is no condition; it always advances.  If 'same' is selected, then it advances only if the text in the two text boxes (top and bottom) are the same.  If 'diff' is selected, then it advances only if the text in the two text boxes are different.  If you click Do All when 'random' is check-marked, then the memories will be invoked in random memory order:  example:  2 could come before 1.  But all tasks within the memory are executed in order.  If a Do All 'rigid' case is done, then the tasks will be done in order of the saved settings in either your GB_save.txt file or your custom named file (in either case you have to Load or Load As them first).  That means all tasks will have a memory #1.  To accomplish this when training, you can use a tilda (~) command to switch memories.  Then do a tisk ` command to exit the second memory to return to training the first memory.")
+    print("When the Do or Repeat buttons are clicked, only the tasks in memory #X are done.  For the Do case, those tasks will be done 1 time.  For Repeat case, those tasks will be repeated  any number of times as set in the reps box.  The Do All and Rep All (which repeats Do All) buttons have more options.  The default case is when the random and rigid checkboxes are unchecked.  In the default case, tasks will be preformed starting in memory #1 until complete, and then tasks in memory #2 will be done, and so on.  Also, a text comparison conditionality can be configured to determine whether to proceed to the next memory.  If 'always' is selected, there is no condition; it always advances.  If 'same' is selected, then it advances only if the text in the two text boxes (top and bottom) are the same.  If 'diff' is selected, then it advances only if the text in the two text boxes are different.  If you click Do All or Rep All when 'random' is check-marked, then the memories will be invoked in random memory order:  example:  2 could come before 1.  But all tasks within the memory are executed in order.  If a Do All 'rigid' case is done, then the tasks will be done in order of the saved settings in either your GB_save.txt file or your custom named file (in either case you have to Load or Load As them first).  That means all tasks will have a memory #1.  To accomplish this when training, you can use a tilda (~) command to switch memories.  Then do a tisk ` command to exit the second memory to return to training the first memory.")
     print("")
     
     print("Example basic process flow:")
@@ -720,11 +724,21 @@ def Repeat():
     global i 
     
     num_reps = int(reps.get())
-    mem = int(mem_box.get())
+    mem = int(falls.get())
     
     for o in range(num_reps+1):
         i = mem-1
         Do()
+
+
+def RepAll():
+    global i 
+    
+    num_reps = int(reps.get())
+    mem = int(falls.get())
+    
+    for o in range(num_reps+1):
+        Do_all()
 
 
 
@@ -784,7 +798,7 @@ def Load():
                     try:
                         Task[aa].append(b)
                     except:
-                        print("huh")
+                        
                         T.append([])
                         Task.append([])
                         time.append([])
@@ -948,7 +962,7 @@ frame.pack()
 frame = Frame(root)
 
 falls = Spinbox(frame,from_=1, to = 10,width=2)
-c = Button(frame,text="Do",command=Do)
+c = Button(frame,text="Do",command=Repeat)
 c.pack(side=LEFT)
 
 
@@ -959,7 +973,7 @@ rand_var = IntVar()
 rigid_var = IntVar()
 run_var = StringVar()
 run_var.set("0.000")
-h = Button(frame,text="Do All",command=Do_all)
+h = Button(frame,text="Do All",command=RepAll)
 h.pack(side=LEFT)
 
 h = Checkbutton(frame,text="rand",variable=rand_var)
@@ -976,24 +990,16 @@ frame.pack()
 
 frame = Frame(root)
 
-mem_box = Spinbox(frame,from_=1, to = 10,width=2)
-reps = Spinbox(frame,from_=1, to = 1000,width=3)
-
-c = Button(frame,text="Repeat",command=Repeat)
-c.pack(side=LEFT)
-
-u = Label(frame, text=" ")
-u.pack(side=LEFT)
+#mem_box = Spinbox(frame,from_=1, to = 10,width=2)
+reps = Spinbox(frame,from_=0, to = 1000,width=3)
 
 
-mem_box.pack(side=LEFT)
-
-u = Label(frame, text="   repeats: ")
+u = Label(frame, text="number of repeats: ")
 u.pack(side=LEFT)
 
 reps.pack(side=LEFT)
 
-u = Label(frame, text="     ")
+u = Label(frame, text=" ")
 u.pack(side=LEFT)
 
 
