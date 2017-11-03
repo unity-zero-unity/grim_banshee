@@ -786,6 +786,11 @@ def Load():
                 try:
                     
                     tmpsplit = o.split("|")
+                    m = ''
+                    m2 = ''
+                    m3 = ''
+                    m4 = ''
+                    m5 = ''
                     
                     if len(tmpsplit) == 5:
                         a = tmpsplit[0]
