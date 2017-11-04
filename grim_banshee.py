@@ -508,7 +508,7 @@ def Train():
                 add_to('hk')
             
             elif install == "help":
-                Help()
+                Help_l()
                 
             elif install == "#":
                add_to("#")
@@ -638,7 +638,7 @@ def Do():
             pyautogui.keyDown(msg) 
             
         elif Task[ring][p] == 'help':
-            Help_l()    
+            pass    
         
         elif Task[ring][p] == 'hk':
             parse = message[ring][p].split('|')
@@ -742,42 +742,46 @@ def RepAll():
 
 
 
+
 def Save():
+    file = "GB_Save.txt"
+    Save_(file)
+    
+def SaveAs():
+    file = asksaveasfilename()
+    Save_(file)
+
+def Save_(file):
     
     
-    with open("GB_Save.txt", "w") as text_file:
+    with open(file, "w") as text_file:
         for p,o in enumerate(T):
             
             for q,r in enumerate(o):
                 text_file.write(str(p+1) + '|' + str(Task[p][q]) + '|' + str(r) + '|' + time[p][q] + '|' + message[p][q] + '\n')
                 
     
-    
-
-
-def SaveAs():
-    
-    f = asksaveasfilename()
-    
-        
-    with open(f, "w") as text_file:
-        for p,o in enumerate(T):
-            
-            
-            for q,r in enumerate(o):
-                text_file.write(str(p+1) + '|' + str(Task[p][q]) + '|' + str(r) + '|' + time[p][q] + '|' + message[p][q])
-                text_file.write('\n')
- 
-
+  
 
 def Load():
+    file = "GB_Save.txt"
+    Load_(file)
+
+
+def LoadAs():
+    file = askopenfilename()
+    Load_(file)
+
+
+
+def Load_(file):
     
     Clearall()
     tmp = 0.0
     
     
     
-    with open("GB_Save.txt",'r') as text_file:
+    with open(file,'r') as text_file:
     
         for p,o in enumerate(text_file):
             
@@ -887,117 +891,6 @@ def Load():
     root.update_idletasks()
     
     
-
-def LoadAs():
-    
-    Clearall()
-    tmp = 0.0
-    
-    root.update_idletasks()
-    
-    file = askopenfilename()
-    text_file = open(file, "r") 
-    for p,o in enumerate(text_file): 
-        
-        if len(o) > 0 and o[0] != "#": 
-            
-                try:
-                    
-                    tmpsplit = o.split("|")
-                    
-                    if len(tmpsplit) == 5:
-                        a = tmpsplit[0]
-                        b = tmpsplit[1] 
-                        c = tmpsplit[2]
-                        t = tmpsplit[3]
-                        m = tmpsplit[4].split('\n')[0]
-                        
-                    elif len(tmpsplit) == 6:
-                        a = tmpsplit[0]
-                        b = tmpsplit[1] 
-                        c = tmpsplit[2]
-                        t = tmpsplit[3]
-                        m = tmpsplit[4]
-                        m2 = tmpsplit[5].split('\n')[0]
-                        
-                    elif len(tmpsplit) == 7:
-                        a = tmpsplit[0]
-                        b = tmpsplit[1] 
-                        c = tmpsplit[2]
-                        t = tmpsplit[3]
-                        m = tmpsplit[4]
-                        m2 = tmpsplit[5]
-                        m3 = tmpsplit[6].split('\n')[0]
-                        
-                    elif len(tmpsplit) == 8:
-                        a = tmpsplit[0]
-                        b = tmpsplit[1] 
-                        c = tmpsplit[2]
-                        t = tmpsplit[3]
-                        m = tmpsplit[4]
-                        m2 = tmpsplit[5]
-                        m3 = tmpsplit[6]
-                        m4 = tmpsplit[7].split('\n')[0]
-                        
-                    elif len(tmpsplit) == 9:
-                        a = tmpsplit[0]
-                        b = tmpsplit[1] 
-                        c = tmpsplit[2]
-                        t = tmpsplit[3]
-                        m = tmpsplit[4]
-                        m2 = tmpsplit[5]
-                        m3 = tmpsplit[6]
-                        m4 = tmpsplit[7]
-                        m5 = tmpsplit[8].split('\n')[0]
-                    
-                    
-                    if m2 != '':
-                        m = m + '|' + m2 
-                    elif m3 != '':
-                        m = m + '|' + m3
-                    elif m4 != '':
-                        m = m + + '|' + m4
-                    elif m5 != '':
-                        m = m + '|' + m5
-                    
-                    
-                    if int(rigid_var.get()) == 1:
-                        aa = 0
-                        
-                    else:
-                        aa=int(a)-1
-                    
-                    
-                    try:
-                        Task[aa].append(b)
-                    except:
-                        
-                        T.append([])
-                        Task.append([])
-                        time.append([])
-                        message.append([])
-                        Task[aa].append(b)
-                    d = c.split("(")
-                    e = d[1].split(")")
-                    f = e[0].split(",")
-                    g = (int(f[0]),int(f[1]))
-                    T[aa].append(g)
-                    time[aa].append(t)
-                    message[aa].append(str(m))
-                    
-                    tmp = float(tmp) + float(t)
-                except:
-                    print("Invalid file format.")
-                
-        else:
-            pass
-        
-    tmp = nice_time(str(tmp))    
-     
-    run_var.set(tmp)
-    root.update_idletasks()
-    
-
 
 
 
@@ -1115,7 +1008,6 @@ frame.pack()
 
 frame = Frame(root)
 
-#mem_box = Spinbox(frame,from_=1, to = 10,width=2)
 reps = Spinbox(frame,from_=0, to = 1000,width=3)
 
 
